@@ -1,16 +1,18 @@
-@extends('home')
+@extends('auth.admin.layout')
 @section('content')
 
+
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet"/>
 <div class="w-full max-w-md mx-auto mt-10 mb-6">
-  <h2 class="text-xl font-bold mb-6">Registration Form</h2>
-  <form method="post" action="{{route('register')}}" enctype="multipart/form-data" >
+  <h2 class="text-xl font-bold mb-6">création</h2>
+  <form method="post" action="{{route('users.store')}}" enctype="multipart/form-data" >
   @csrf
     <div class="grid grid-cols-2 gap-6">
       <div class="mb-6">
         <label for="nom" class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
         <input type="text" id="nom" name="nom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre nom">
         @if($errors->has('nom'))
-							<span class="text-red-600">{{ $errors->first('nom') }}</span>
+			<span class="text-red-600">{{ $errors->first('nom') }}</span>
 		@endif
       </div>
       <div class="mb-6">
@@ -76,6 +78,21 @@
 		@endif
     </div>
     </div>
+
+    <div class="grid grid-cols-2 gap-6">
+    <div class="mb-6">
+        <label for="role" class="block mb-2 text-sm font-medium text-gray-900">role</label>
+        <select name="role" id="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="admin">admin</option>
+            <option value="manager">manager</option>
+            <option value="user">user</option>
+        </select>
+        @if($errors->has('role'))
+							<span class="text-red-600">{{ $errors->first('role') }}</span>
+		@endif
+    </div>
+    </div>
+
     <div class="grid grid-cols-2 gap-6">
       <div class="mb-6">
         <label for="Email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
@@ -115,4 +132,4 @@
   </form>
 </div>
 @endsection
-@section('title','inscription')
+@section('title','création des utilisateurs')

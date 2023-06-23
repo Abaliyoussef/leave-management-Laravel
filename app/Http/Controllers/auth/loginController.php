@@ -12,6 +12,9 @@ class loginController extends Controller
     public function login(){
         return view('auth.login');
     }
+    public function dashboard(){
+        return view('auth.admin.layout');
+    }
 
     public function authenticate(Request $request)
     {
@@ -21,10 +24,8 @@ class loginController extends Controller
             'password' => ['required'],
         ]);
         if (Auth::attempt($credentials)) {
-            $user =Auth::user();
             $request->session()->regenerate();
-            $user->user_active=true;
-            $user->save();
+
             return redirect()->intended('/');
         }
  
@@ -34,9 +35,7 @@ class loginController extends Controller
     }
     public function logout(Request $request)
     {
-        $user =Auth::user();
-        $user->user_active=false;
-        $user->save();
+
         Auth::logout();
      
         $request->session()->invalidate();

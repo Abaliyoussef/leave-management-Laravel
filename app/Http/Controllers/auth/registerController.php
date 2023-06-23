@@ -5,6 +5,7 @@ namespace App\Http\Controllers\auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -12,7 +13,8 @@ use Illuminate\Support\Facades\Hash;
 class registerController extends Controller
 {
     public function register(){
-        return view('auth.register');
+        $departs=DB::table('departements')->get();
+        return view('auth.register',['departements'=>$departs]);
     }
   
     public function store(Request $request)
@@ -29,10 +31,10 @@ class registerController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required','confirmed','min:8'],
         ]);
-        $filename;
+        $filename='no-image.png';
         $file= $request->file('photo');
         if($file){
-            $filename= date('YmdHis').'_'.$file->getClientOriginalName();;
+            $filename= date('YmdHis').'_'.$file->getClientOriginalName();
             $file-> move(public_path('Image'), $filename);
         }
         
@@ -50,7 +52,7 @@ class registerController extends Controller
             'score' => 22,
             'verifie' => false,
             'user_active' => true,
-            'departement_id' => 1,
+            'departement_id' => $request->departement,
             'password' => Hash::make($request->password),
         ]);
 

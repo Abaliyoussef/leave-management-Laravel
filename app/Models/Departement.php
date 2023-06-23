@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Departement extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'depart_name' ,
+    
+    ];
+
     public function users()
     {
    return $this->hasMany(User::class);
