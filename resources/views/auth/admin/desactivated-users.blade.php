@@ -1,12 +1,22 @@
 @extends('auth.admin.layout')
 @section('content')
+@if(Session::has('success'))
+<script>
+  Swal.fire({
+  position: 'top',
+  icon: 'success',
+  title: '{{ Session::get('success')}}',
+  showConfirmButton: false,
+  timer: 2000,
+})
+</script>
+@endif
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">Les utilisateurs désactivés</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
+                            
                         </ol>
                         <div class="d-flex justify-content-between mb-3">
 
@@ -19,7 +29,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                liste des utilisateurs désactivés
                             </div>
                             <div class="card-body">
                             <div class="table-responsive">
@@ -27,37 +37,47 @@
   <thead>
   <tr>
                                             <th>#</th>
-                                            <th>image</th>
+                                            <th>Image</th>
                                             <th>nom</th>
-                                            <th>prenom</th>
-                                            <th>cin</th>
-                                            <th>email</th>
-                                            <th>departement</th>
-                                            <th>poste</th>
-                                            <th>téléphone</th>
-                                            <th>action</th>
+                                            <th>CIN</th>
+                                            <th>N. SOM</th>
+                                            <th>Nationalité</th>
+                                            <th>Genre</th>
+                                            <th>Email</th>
+                                            <th>Département</th>
+                                            <th>Poste</th>
+                                            <th>Tel</th>
+                                            <th>Actions</th>
                                         </tr>
   </thead>
   <tbody>
   @foreach($users as $user)
                                         <tr>
                                         
-                                            <td>{{$user->id}}</td>
-                                            <td><img src="{{url('Image/'.$user->image)}}" 
-                                            style="height: 100px; width: 150px;"/></td>
-                                            <td>{{$user->last_name}}</td>
-                                            <td>{{$user->first_name}}</td>
+                                        <td>{{$user->id}}</td>
+                                        <td><div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+                                            <img src="{{url('Image/'.$user->image)}}"  alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </div></td>
+                                            <td>{{$user->last_name.' ' .$user->first_name}}</td>
                                             <td>{{$user->cin}}</td>
+                                            <td>{{$user->num_de_som}}</td>
+                                            <td>{{$user->nationalite}}</td>
+                                            <td>{{$user->genre}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->departement_name}}</td>
                                             <td>{{$user->poste}}</td>
                                             <td>{{$user->phone}}</td>
                                             
                                             <td>  <div class="btn-group" role="group">
-    <form action="{{route('admin.users.activate',['user'=>$user->id])}}" method="POST">
+    <form action="{{route('admin.users.activate',['user'=>$user->id])}}" id="activer-form" method="POST">
       @csrf
-      
-      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('cet utilisateur va etre réactivé')">activer</button>
+      <button type="submit" id="activer-button" class="btn btn-sm btn-info mx-2" onclick="submitForm(event,'voulez-vous activer cet utilisateur ?','Activer')"><i class="fa fa-check-square" aria-hidden="true"></i></button>
+    </form>
+    <form action="{{route('users.destroy',['id'=>$user->id])}}" id="delete-form" method="POST">
+      @csrf
+      @method('DELETE')
+      <button type="submit" id="delete-button" class="btn btn-sm btn-danger" onclick="submitForm(event,'voulez-vous supprimer cet utilisateur ?','Supprimer')"><i class="fa fa-trash" aria-hidden="true"></i>
+</button>
     </form>
   </div></td>
                                         </tr>
@@ -75,5 +95,40 @@
                 </main>
                 
             </div>
+            <script>
+const deleteButton = document.getElementById('delete-button');
+deleteButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    Swal.fire({
+  title: 'voulez-vous que cet utilisateur sera supprimé définitivement ?',
+  
+  showCancelButton: true,
+  confirmButtonText: 'Supprimer',
+  cancelButtonText: 'Annuler',
+  
+}).then((result) => {
+  if (result.isConfirmed) {
+    document.getElementById('delete-form').submit();
+  } 
+})
+});
+
+const activerButton = document.getElementById('activer-button');
+activerButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    Swal.fire({
+  title: 'Cet utilisateur va être réactivé',
+  
+  showCancelButton: true,
+  confirmButtonText: 'Activer',
+  cancelButtonText: 'Annuler',
+  
+}).then((result) => {
+  if (result.isConfirmed) {
+    document.getElementById('activer-form').submit();
+  } 
+})
+});
+            </script>
 @endsection
 @section('title','utilisateurs désactivés')

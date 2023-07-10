@@ -10,7 +10,7 @@
 <h2 class="text-xl font-bold mb-6">Modification</h2>
   <div class="mb-6">
     <label for="nom" class="block mb-2 text-sm font-medium text-gray-900">nom</label>
-    <input type="text" id="nom" name="nom" value="{{$departement->depart_name}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@example.com">
+    <input type="text" id="nom" name="nom" value="{{$departement->depart_name}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="nom du département">
 
   </div>
   

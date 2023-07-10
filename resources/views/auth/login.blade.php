@@ -9,7 +9,7 @@
   <span class="block sm:inline">{{ $errors->first('email') }}</span>
 </div>
 @endif
-		
+	
 @csrf
 <h2 class="text-xl font-bold mb-6">Se connecter à votre compte</h2>
   <div class="mb-6">
@@ -19,7 +19,7 @@
   </div>
   <div class="mb-6">
     <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
-    <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Your password">
+    <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="votre mot de passe">
 
   </div>
   <div class="flex items-start mb-6">
@@ -30,6 +30,8 @@
       <label for="remember" class="font-medium text-gray-900">Remember me</label>
     </div>
     <a href="{{route('password.request')}}" class="text-sm text-blue-700 hover:underline ml-auto">Forgot password?</a>
+    <span class="text-sm ml-2 mr-1">or want to </span> 
+    <a href="{{route('register')}}" class="text-sm text-blue-700 hover:underline "> register</a>
   </div>
   <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-base px-5 py-3 w-full sm:w-auto">Submit</button>
 </form>

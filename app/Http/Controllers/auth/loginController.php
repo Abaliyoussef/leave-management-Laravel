@@ -12,21 +12,26 @@ class loginController extends Controller
     public function login(){
         return view('auth.login');
     }
-    public function dashboard(){
-        return view('auth.admin.layout');
-    }
+
 
     public function authenticate(Request $request)
     {
+        
         
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        if (Auth::attempt($credentials)) {
+       
+        if (Auth::attempt($credentials,$request->remember)) {
             $request->session()->regenerate();
-
-            return redirect()->intended('/');
+            $user=Auth::user();
+            if($user->role=='admin'){
+                return redirect()->route('users.index');
+            }else if($user->role=='manager'){
+                return redirect()->route('manager.conge.new-demands');
+            }
+            return redirect()->route('employe.Allconges',['id'=>$user->id]);
         }
  
         return back()->withErrors([

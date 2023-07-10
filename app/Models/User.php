@@ -23,6 +23,9 @@ class User extends Authenticatable
         'first_name' ,
         'cin' ,
         'email' ,
+        'num_de_som' ,
+        'situation' ,
+        'nationalite' ,
         'genre' ,
         'role' ,
         'poste' ,
@@ -55,7 +58,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    public function conges()
+    {
+   return $this->hasMany(Conge::class);
+    }
+    
     public function departement()
     {
      return $this->belongsTo(Departement::class);

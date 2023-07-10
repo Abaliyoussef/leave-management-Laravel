@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\departement;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -50,10 +50,9 @@ $departs=DB::table('departements')
         ]);
         Departement::create([
             'depart_name' => $request->nom,
-           
         ]);
 
-        return redirect()->route('departements.index');
+        return redirect()->route('departements.index')->with('success', 'Enregistré avec succès');
     }
 
     
@@ -74,16 +73,12 @@ $departs=DB::table('departements')
         $request->validate([
             'nom' => ['required', 'string', 'max:255'],
         ]);
-
         $departement = Departement::find($id);
         if($departement){
-            //dd($departement);
             $departement->depart_name=$request->nom;
             $departement->save();
         }
-  
-
-        return redirect()->route('departements.index');
+        return redirect()->route('departements.index')->with('success', 'Modifié avec succès');
     }
 
     /**
@@ -98,7 +93,6 @@ $departs=DB::table('departements')
         if($departement){
             $departement->delete();
         }
-        
-        return redirect()->route('departements.index');
+        return redirect()->route('departements.index')->with('success', 'Supprimé avec succès');
     }
 }

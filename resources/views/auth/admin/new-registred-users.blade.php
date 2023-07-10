@@ -1,12 +1,22 @@
 @extends('auth.admin.layout')
 @section('content')
+@if(Session::has('success'))
+<script>
+  Swal.fire({
+  position: 'top',
+  icon: 'success',
+  title: '{{ Session::get('success')}}',
+  showConfirmButton: false,
+  timer: 2000,
+})
+</script>
+@endif
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">Les nouveaux utilisateurs </h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
+                      
                         </ol>
                         <div class="d-flex justify-content-between mb-3">
 
@@ -19,23 +29,25 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                utilisateurs nouvellement inscrits
                             </div>
                             <div class="card-body">
                             <div class="table-responsive">
                             <table class="table">
   <thead>
   <tr>
-                                            <th>#</th>
-                                            <th>image</th>
+  <th>#</th>
+                                            <th>Image</th>
                                             <th>nom</th>
-                                            <th>prenom</th>
-                                            <th>cin</th>
-                                            <th>email</th>
-                                            <th>departement</th>
-                                            <th>poste</th>
-                                            <th>téléphone</th>
-                                            <th>action</th>
+                                            <th>CIN</th>
+                                            <th>N. SOM</th>
+                                            <th>Nationalité</th>
+                                            <th>Genre</th>
+                                            <th>Email</th>
+                                            <th>Département</th>
+                                            <th>Poste</th>
+                                            <th>Tel</th>
+                                            <th>Actions</th>
                                         </tr>
   </thead>
   <tbody>
@@ -43,11 +55,14 @@
                                         <tr>
                                         
                                             <td>{{$user->id}}</td>
-                                            <td><img src="{{url('Image/'.$user->image)}}" 
-                                            style="height: 100px; width: 150px;"/></td>
-                                            <td>{{$user->last_name}}</td>
-                                            <td>{{$user->first_name}}</td>
+                                            <td><div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden;">
+                                            <img src="{{url('Image/'.$user->image)}}"  alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </div></td>
+<td>{{$user->last_name.' ' .$user->first_name}}</td>
                                             <td>{{$user->cin}}</td>
+                                            <td>{{$user->num_de_som}}</td>
+                                            <td>{{$user->nationalite}}</td>
+                                            <td>{{$user->genre}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->departement_name}}</td>
                                             <td>{{$user->poste}}</td>
@@ -57,7 +72,7 @@
     <form action="{{route('admin.users.new-registred.verify',['user'=>$user->id])}}" method="POST">
       @csrf
       
-      <button type="submit" class="btn btn-sm btn-info">Vérifier</button>
+      <button type="submit" class="btn btn-sm btn-info" onclick="submitForm(event,'êtes-vous sûre que cet utilisateurs est vérifié ?','Oui, je suis sûre')">Vérifier</button>
     </form>
   </div></td>
                                         </tr>

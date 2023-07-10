@@ -18,23 +18,25 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('cin');
+            $table->string('situation');
+            $table->string('num_de_som');
+            $table->string('nationalite');
             $table->string('genre');
             $table->string('role');
             $table->string('date_naissance');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->foreignId('departement_id')
+            ->constrained()
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+            $table->string('poste');
             $table->string('phone');
             $table->string('image', 2048)->nullable();
             $table->integer('score')->default('22');
             $table->boolean('verifie');
             $table->boolean('user_active');
-
-            $table->foreignId('departement_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
-            $table->string('poste'); 
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            
             $table->rememberToken();
             $table->timestamps();
         });

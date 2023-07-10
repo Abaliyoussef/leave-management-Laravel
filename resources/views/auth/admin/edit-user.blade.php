@@ -2,22 +2,24 @@
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet"/>
 
-<div class="w-full max-w-md mx-auto mt-10 mb-6">
-  <h2 class="text-xl font-bold mb-6">modification</h2>
-  <form method="post" action="{{route('users.update',['user'=>$user->id])}}" enctype="multipart/form-data" >
+<div class="w-full max-w-2xl mx-auto mt-10 mb-6">
+  <div class="flex justify-center">
+  <h2 class="text-xl font-bold mb-6">Modification des informations</h2>
+</div>
+  <form method="post" action="{{route('users.update',['id'=>$user->id])}}" enctype="multipart/form-data" >
   @csrf
   @method('PUT')
     <div class="grid grid-cols-2 gap-6">
       <div class="mb-6">
         <label for="nom" class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
-        <input type="text" id="nom" name="nom" value="{{$user->last_name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre nom">
+        <input type="text" id="nom" name="nom" value="{{$user->last_name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="nom de l'utilisateur">
         @if($errors->has('nom'))
 							<span class="text-red-600">{{ $errors->first('nom') }}</span>
 		@endif
       </div>
       <div class="mb-6">
-        <label for="prenom" class="block mb-2 text-sm font-medium text-gray-900">Prenom</label>
-        <input type="text" id="prenom" name="prenom" value="{{$user->first_name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre prenom">
+        <label for="prenom" class="block mb-2 text-sm font-medium text-gray-900">Prénom</label>
+        <input type="text" id="prenom" name="prenom" value="{{$user->first_name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="prenom de l'utilisateur">
         @if($errors->has('prenom'))
 							<span class="text-red-600">{{ $errors->first('prenom') }}</span>
 		@endif
@@ -26,7 +28,7 @@
     <div class="grid grid-cols-2 gap-6">
       <div class="mb-6">
         <label for="cin" class="block mb-2 text-sm font-medium text-gray-900">CIN</label>
-        <input type="text" id="cin" name="cin" value="{{$user->cin }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre CIN">
+        <input type="text" id="cin" name="cin" value="{{$user->cin }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ex.:AB34123">
         @if($errors->has('cin'))
 							<span class="text-red-600">{{ $errors->first('cin') }}</span>
 		@endif
@@ -36,6 +38,43 @@
         <input type="date" id="datenaissance" value="{{ $user->date_naissance  }}"  name="datenaissance"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="date de naissance">
         @if($errors->has('datenaissance'))
 							<span class="text-red-600">{{ $errors->first('datenaissance') }}</span>
+		@endif
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-6">
+    <div class="mb-6">
+        <label for="numdesom" class="block mb-2 text-sm font-medium text-gray-900">Numéro de som</label>
+        <input type="text" id="numdesom" name="numdesom" value="{{$user->num_de_som }}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="numéro de som">
+        @if($errors->has('numdesom'))
+							<span class="text-red-600">{{ $errors->first('numdesom') }}</span>
+		@endif
+      </div>
+      <div class="mb-6">
+        <label for="role" class="block mb-2 text-sm font-medium text-gray-900">rôle</label>
+        <select name="role" id="role" value="{{$user->role }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }} >admin</option>
+            <option value="manager"  {{ $user->role == 'manager' ? 'selected' : '' }}>manager</option>
+            <option value="user"  {{ $user->role == 'user' ? 'selected' : '' }}>user</option>
+        </select>
+        @if($errors->has('role'))
+							<span class="text-red-600">{{ $errors->first('role') }}</span>
+		@endif
+    </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-6">
+      <div class="mb-6">
+        <label for="nationalite" class="block mb-2 text-sm font-medium text-gray-900">Nationalité</label>
+        <input type="text" id="nationalite" name="nationalite" value="{{$user->nationalite }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="nationelité">
+        @if($errors->has('nationalite'))
+							<span class="text-red-600">{{ $errors->first('nationalite') }}</span>
+		@endif
+      </div>
+    <div class="mb-6">
+        <label for="situation" class="block mb-2 text-sm font-medium text-gray-900">Situation familiale</label>
+        <input type="text" id="situation" name="situation" value="{{$user->situation }}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="situation familiale">
+        @if($errors->has('situation'))
+							<span class="text-red-600">{{ $errors->first('situation') }}</span>
 		@endif
       </div>
     </div>
@@ -78,37 +117,26 @@
 		@endif
     </div>
     </div>
-    <div class="grid grid-cols-2 gap-6">
-    <div class="mb-6">
-        <label for="role" class="block mb-2 text-sm font-medium text-gray-900">role</label>
-        <select name="role" id="role" value="{{$user->role }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }} >admin</option>
-            <option value="manager"  {{ $user->role == 'manager' ? 'selected' : '' }}>manager</option>
-            <option value="user"  {{ $user->role == 'user' ? 'selected' : '' }}>user</option>
-        </select>
-        @if($errors->has('role'))
-							<span class="text-red-600">{{ $errors->first('role') }}</span>
-		@endif
-    </div>
-    </div>
+    
+    
     <div class="grid grid-cols-2 gap-6">
       <div class="mb-6">
         <label for="Email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-        <input type="email" id="Email" value="{{$user->email }}" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre Email">
+        <input type="email" id="Email" value="{{$user->email }}" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir l'Email">
         @if($errors->has('email'))
 							<span class="text-red-600">{{ $errors->first('email') }}</span>
 		@endif
       </div>
     <div class="mb-6">
         <label for="number" class="block mb-2 text-sm font-medium text-gray-900">numéro de téléphone</label>
-        <input type="text" id="number" name="phonenumber" value="{{$user->phone }}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="date de numéro de téléphone">
+        <input type="text" id="number" name="phonenumber" value="{{$user->phone }}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="numéro de téléphone">
         @if($errors->has('phonenumber'))
 							<span class="text-red-600">{{ $errors->first('phonenumber') }}</span>
 		@endif
       </div>
     </div>
     <div class="flex justify-center">
-      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">modifier</button>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Modifier</button>
     </div>
     <!-- Rest of the form fields -->
   </form>

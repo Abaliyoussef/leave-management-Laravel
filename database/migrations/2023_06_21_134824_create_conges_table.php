@@ -20,9 +20,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('status')->default('Pending');
             $table->boolean('demande_annulation')->default(0);
-            $table->boolean('pas_annule')->default(0);
-            $table->boolean('propose')->default(0);
-            $table->boolean('ajoute')->default(0);
+            $table->integer('duree')->default(0);
             $table->foreignId('user_id')
                   ->constrained()
                   ->onDelete('cascade')
