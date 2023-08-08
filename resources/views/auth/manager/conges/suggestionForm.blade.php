@@ -18,18 +18,7 @@
 })
 </script>
 @endif
-@if(Session::has('success'))
-<script>
-  Swal.fire({
-  position: 'top',
-  icon: 'success',
-  title: '{{ Session::get('success')}}',
-  showConfirmButton: false,
-  timer: 2000,
-})
 
-</script>
-@endif
 <h2 class="text-xl font-bold mb-6">création du suggestion</h2>
 <input type="hidden"  name="user_id" value="{{$conge->user->id}}" >
 <input type="hidden"  name="status" value="Proposé" >
@@ -46,10 +35,10 @@
 							<span class="text-red-600">{{ $errors->first('date_debut') }}</span>
 		@endif
   </div>  <div class="mb-6">
-    <label for="" class="block mb-2 text-sm font-medium text-gray-900">Durée</label>
-    <input type="date"  name="duree"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"   min="1">
-    @if($errors->has('duree'))
-							<span class="text-red-600">{{ $errors->first('duree') }}</span>
+    <label for="" class="block mb-2 text-sm font-medium text-gray-900">Date de fin</label>
+    <input type="date"  name="date_fin"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  min="">
+    @if($errors->has('date_fin'))
+							<span class="text-red-600">{{ $errors->first('date_fin') }}</span>
 		@endif
   </div>
     

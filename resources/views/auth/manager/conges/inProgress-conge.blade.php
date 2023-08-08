@@ -30,7 +30,8 @@
                                             <th>Durée</th>
                                             <th>Description</th>
                                             <th>Status</th>
-                                            <th>Documents</th>
+                                            <th>Décision congé</th>
+                                            <th>Procès verbal</th>
                                         </tr>
   </thead>
   <tbody>
@@ -45,11 +46,15 @@
                                           <td>{{$conge->description}}</td>
                                         <td><div class="btn btn-sm " style="background-color: #f1c40f; color: #ffffff; padding: 10px;" >En cours...</div></td>                                            
                                         <td>  <div class="btn-group" role="group">
+                                            <a href="{{route('conge.decision',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> FR</a>
+                                            <a href="{{route('conge.decision.ar',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> AR</a>
 
-<a href="{{route('conge.decision',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Décision</a>
-<a href="{{route('conge.procesVerbal',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Procès verbal</a>
+                                            </div></td>
+                                            <td>  <div class="btn-group" role="group">
+                                            <a href="{{route('conge.procesVerbal',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> FR</a>
+                                            <a href="{{route('conge.procesVerbal.ar',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> AR</a>
 
-                </div></td>
+                                            </div></td>
                                         </tr>
                                         @endforeach
                                         

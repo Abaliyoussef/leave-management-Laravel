@@ -59,7 +59,7 @@
                                             <img src="{{url('Image/'.$user->image)}}"  alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover;">
                                             </div></td>
                                             
-                                            <td>{{$user->last_name.' ' .$user->first_name}}</td>
+                                            <td>{{$user->last_name.' ' .$user->first_name.'-'.$user->first_name_ar.' ' .$user->last_name_ar}}</td>
                                             <td>{{$user->cin}}</td>
                                             <td>{{$user->num_de_som}}</td>
                                             <td>{{$user->nationalite}}</td>

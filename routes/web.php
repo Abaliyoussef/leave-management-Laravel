@@ -82,6 +82,9 @@ Route::post('/conge/create',[congeController::class, 'storeConge'] )->name('cong
 Route::put('/conge/update/{id}',[congeController::class, 'updateConge'] )->name('conge.update');
 Route::get('/generate-decision/{id}', [congeController::class,'generateDecision'])->name('conge.decision');
 Route::get('/generate-pv/{id}', [congeController::class,'generatePV'])->name('conge.procesVerbal');
+Route::get('/generate-decision-ar/{id}', [congeController::class,'generateDecisionArabic'])->name('conge.decision.ar');
+Route::get('/generate-pv-ar/{id}', [congeController::class,'generatePVArabic'])->name('conge.procesVerbal.ar');
+Route::delete('/conge/delete/{id}',[congeController::class, 'delete'] )->name('conge.delete');
 Route::resource('holidays', HolidayController::class);
 
 });
@@ -96,7 +99,6 @@ Route::get('/conge/all-demande/search',[congeController::class, 'searchAllNotPen
 Route::get('/conge/inProgress-conges',[congeController::class, 'inProgressConges'] )->name('manager.conge.inProgressConges');
 Route::get('/conge/archived-conges',[congeController::class, 'archivedConges'] )->name('manager.conge.archived');
 Route::get('/conge/archived-conges/search',[congeController::class, 'searchArchivedConges'] )->name('manager.conge.archived.search');
-Route::delete('/conge/delete/{id}',[congeController::class, 'delete'] )->name('manager.conge.delete');
 Route::get('/conge/demandes-annulation',[congeController::class, 'demandeAnnulationConges'] )->name('manager.conge.demandes-annulation');
 Route::get('/conge/demandes-annulation/search',[congeController::class, 'searchdemandeAnnulationConges'] )->name('manager.conge.demandes-annulation.search');
 
@@ -109,6 +111,7 @@ Route::get('/mesConges/{id}',[congeController::class, 'userNotPendingConges'] )-
 Route::get('/mespropositiondeconges/{id}',[congeController::class, 'userSuggestedConges'] )->name('employe.conge.proposition');
 Route::get('/mescongesexpires/{id}',[congeController::class, 'userExpiredConges'] )->name('employe.conge.expires');
 Route::get('/employe-holidays', [HolidayController::class,'holidays'])->name('employe.holidays');
+Route::get('/generate-demande/{id}', [congeController::class,'generateDemande'])->name('conge.demande');
 
 });
 

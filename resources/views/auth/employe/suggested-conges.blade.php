@@ -44,7 +44,7 @@
                                             <td>{{$conge->description}}</td>
                                             <td><div class="btn btn-sm btn-warning" >{{$conge->status}}</div></td>                                            
                                             <td>  <div class="btn-group" role="group">
-   <form action="{{route('manager.conge.delete',['id'=>$conge->id])}}" method="POST">
+   <form action="{{route('conge.delete',['id'=>$conge->id])}}" method="POST">
       @csrf
       @method('DELETE')
       <button type="submit" class="btn btn-sm btn-secondary mx-2" onclick="submitForm(event,'cette proposition de congé va être supprimée ?','Supprimer')"><i class="fa fa-trash"></i></button>

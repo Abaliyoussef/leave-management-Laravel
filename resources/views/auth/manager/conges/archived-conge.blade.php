@@ -34,7 +34,9 @@
                                             <th>Durée</th>
                                             <th>Description</th>
                                             <th>Status</th>
-                                            <th>Documents</th>
+                                            <th>Actions</th>
+                                            <th>Décision congé</th>
+                                            <th>Procès verbal</th>
 
                                         </tr>
   </thead>
@@ -48,11 +50,23 @@
                                           <td>{{$conge->date_fin}}</td>
                                           <td>{{$conge->duree}}</td>
                                           <td>{{$conge->description}}</td>
-                                            <td><div class="btn btn-sm btn-warning" >expiré</div></td>                                            
-                                            <td>  <div class="btn-group" role="group">
+                                          <td><div class="btn btn-sm btn-warning" >expiré</div></td> 
+                                          <td>  <div class="btn-group" role="group">
 
-                            <a href="{{route('conge.decision',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Décision</a>
-                            <a href="{{route('conge.procesVerbal',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Procès verbal</a>
+    <form action="{{route('conge.delete',['id'=>$conge->id])}}"  method="POST">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-sm btn-danger" onclick="submitForm(event,'vous voulez supprimer cet élément ?','Supprimer')" ><i class="fa fa-trash"></i></button>
+    </form>
+  </div></td>                                           
+                                          <td>  <div class="btn-group" role="group">
+                                            <a href="{{route('conge.decision',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> FR</a>
+                                            <a href="{{route('conge.decision.ar',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> AR</a>
+
+                                            </div></td>
+                                            <td>  <div class="btn-group" role="group">
+                                            <a href="{{route('conge.procesVerbal',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> FR</a>
+                                            <a href="{{route('conge.procesVerbal.ar',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> AR</a>
 
                                             </div></td>
                                         </tr>

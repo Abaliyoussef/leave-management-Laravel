@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use App\Http\Controllers\Providers\FamilialeState;
 
 class UsersManagementController extends Controller
 {
@@ -21,7 +21,7 @@ class UsersManagementController extends Controller
             ->select('users.*', 'departements.depart_name as departement_name')
             ->where('user_active', '=', true)
             ->where('verifie', '=', true)
-            ->paginate(4);
+            ->paginate(8);
             if (Auth::user()->role=='admin'){
             return view('auth.admin.index-users',['users'=>$users]);
             }
@@ -107,8 +107,10 @@ $users=DB::table('users')
 
     public function create()
     {
-        $departs=DB::table('departements')->get();
-        return view('auth.admin.create-user',['departements'=>$departs]);
+        $departements=DB::table('departements')->get();
+        $situationsFamiliales=FamilialeState::getFamilialeStates();
+
+        return view('auth.admin.create-user', compact('departements', 'situationsFamiliales'));
     }
 
 
@@ -118,13 +120,17 @@ $users=DB::table('users')
         $request->validate([
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
+            'nom_ar' => ['required'],
+            'prenom_ar' => ['required'],
             'cin' => ['required' ],
             'genre' => ['required'],
             'numdesom' => ['required' ],
             'nationalite' => ['required' ],
+            'nationalite_ar' => ['required' ],
             'situation' => ['required' ],
             'departement' => ['required'],
             'poste' => ['required'],
+            'poste_ar' => ['required'],
             'datenaissance' => ['required', 'date'],
             'phonenumber' => ['required', 'numeric','digits:10'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
@@ -139,14 +145,18 @@ $users=DB::table('users')
         $user = User::create([
             'last_name' => $request->nom,
             'first_name' => $request->prenom,
+            'last_name_ar' => $request->nom_ar,
+            'first_name_ar' => $request->prenom_ar,
             'cin' => $request->cin,
             'email' => $request->email,
             'genre' => $request->genre,
             'num_de_som' => $request->numdesom,
             'nationalite' => $request->nationalite,
+            'nationalite_ar' => $request->nationalite_ar,
             'situation' => $request->situation,
             'role' => $request->role,
             'poste' => $request->poste,
+            'poste_ar' => $request->poste_ar,
             'date_naissance' => $request->datenaissance,
             'phone' => $request->phonenumber,
             'image' => $filename,
@@ -164,8 +174,10 @@ $users=DB::table('users')
     public function edit($id)
     {
         $departements=DB::table('departements')->get();
+        $situationsFamiliales=FamilialeState::getFamilialeStates();
         $user =User::find($id);
-      return  view('auth.admin.edit-user', compact('departements', 'user'));
+        return view('auth.admin.edit-user', compact('departements', 'situationsFamiliales','user'));
+
     }
 
  
@@ -175,14 +187,18 @@ $users=DB::table('users')
         $request->validate([
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
+            'nom_ar' => ['required'],
+            'prenom_ar' => ['required'],
             'cin' => ['required' ],
             'genre' => ['required'],
             'numdesom' => ['required' ],
             'nationalite' => ['required' ],
+            'nationalite_ar' => ['required' ],
             'situation' => ['required' ],
             'role' => ['required'],
             'departement' => ['required'],
             'poste' => ['required'],
+            'poste_ar' => ['required'],
             'datenaissance' => ['required', 'date'],
             'phonenumber' => ['required', 'numeric','digits:10'],
             'email' => ['required', 'string', 'email'],
@@ -203,14 +219,18 @@ $users=DB::table('users')
         
         $user->last_name = $request->nom;
         $user->first_name = $request->prenom;
+        $user->last_name_ar = $request->nom_ar;
+        $user->first_name_ar = $request->prenom_ar;
         $user->cin = $request->cin;
         $user->email = $request->email;
         $user->num_de_som = $request->numdesom;
         $user->nationalite = $request->nationalite;
+        $user->nationalite_ar = $request->nationalite_ar;
         $user->situation = $request->situation;
         $user->genre = $request->genre;
         $user->role = $request->role;
         $user->poste = $request->poste;
+        $user->poste_ar =$request->poste_ar;
         $user->date_naissance = $request->datenaissance;
         $user->phone = $request->phonenumber;
         $user->image = $filename;

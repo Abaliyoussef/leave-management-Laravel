@@ -34,6 +34,18 @@
 
 </script>
 @endif
+@if(Session::has('success'))
+<script>
+  Swal.fire({
+  position: 'top',
+  icon: 'success',
+  title: '{{ Session::get('success')}}',
+  showConfirmButton: false,
+  timer: 2000,
+})
+
+</script>
+@endif
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
@@ -59,7 +71,9 @@
                                             <th>Description</th>
                                             <th>Status</th>
                                             <th>Actions</th>
-                                            <th>Documents</th>
+                                            <th>Demande</th>
+                                            <th>Décision congé</th>
+                                            <th>Procès verbal</th>
 
                                         </tr>
   </thead>
@@ -80,17 +94,27 @@
       <input type="hidden" value="annulation..." name="status"/>
       <button type="submit" class="btn btn-sm btn-danger mx-2" onclick="submitForm(event,'voulez-vous annulez ce congé ?','Oui')" {{$conge->status=='annulation...' ||$conge->status=='Annulé' ||$conge->status=='Pending'  ? 'disabled' : ""}} {{$conge->demande_annulation == 1 ? 'disabled' : ''}}>{{$conge->demande_annulation==1 ? 'Annulation refusé' : 'Annuler'}}</button>
     </form>
-    <form action="{{route('manager.conge.delete',['id'=>$conge->id])}}" method="POST">
+    <form action="{{route('conge.delete',['id'=>$conge->id])}}" method="POST">
       @csrf
       @method('DELETE')
       <button type="submit" class="btn btn-sm btn-secondary" onclick="submitForm(event,'voulez-vous supprimer ce congé ?','Supprimer')" {{$conge->status == 'Accordé' ? 'disabled' : ''}}><i class="fa fa-trash"></i></button>
     </form>
+    <td>  <div class="btn-group" role="group">
+                                            @if($conge->status=="Pending")
+                                            <a href="{{route('conge.demande',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Télécharger</a>
+                                            @endif
+                                            </div></td>
   </div></td>
   @if($conge->status=='Accordé')
-  <td>  <div class="btn-group" role="group">
 
-                            <a href="{{route('conge.decision',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Décision</a>
-                            <a href="{{route('conge.procesVerbal',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> Procès verbal</a>
+  <td>  <div class="btn-group" role="group">
+                                            <a href="{{route('conge.decision',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> FR</a>
+                                            <a href="{{route('conge.decision.ar',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> AR</a>
+
+                                            </div></td>
+                                            <td>  <div class="btn-group" role="group">
+                                            <a href="{{route('conge.procesVerbal',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> FR</a>
+                                            <a href="{{route('conge.procesVerbal.ar',['id'=>$conge->id])}}" class="btn btn-sm btn-primary mx-2"><i class="fa fa-download" aria-hidden="true"></i> AR</a>
 
                                             </div></td>
   @endif

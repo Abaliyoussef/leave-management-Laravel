@@ -39,7 +39,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading text-white">Jours restants : {{auth()->user()->score}}</div>
+                            <div class="sb-sidenav-menu-heading text-white 	">Jours restants : {{auth()->user()->score}}</div>
 
                             <div class="sb-sidenav-menu-heading">Administration</div>
                             <a class="nav-link collapsed" href="{{route('employe.Allconges',['id'=>auth()->user()->id])}}" >

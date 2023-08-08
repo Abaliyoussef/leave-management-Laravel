@@ -1,5 +1,17 @@
 @extends('auth.manager.layout')
 @section('content')
+@if(Session::has('success'))
+<script>
+  Swal.fire({
+  position: 'top',
+  icon: 'success',
+  title: '{{ Session::get('success')}}',
+  showConfirmButton: false,
+  timer: 2000,
+})
+
+</script>
+@endif
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
@@ -71,7 +83,7 @@
     </form>
     <a href="{{route('suggestion.create',['id'=>$conge->id])}}"  class="btn btn-sm btn-info mx-2"><i class="fa fa-reply" aria-hidden="true"></i> Suggérer</a>
     @endif
-    <form action="{{route('manager.conge.delete',['id'=>$conge->id])}}"  method="POST">
+    <form action="{{route('conge.delete',['id'=>$conge->id])}}"  method="POST">
       @csrf
       @method('DELETE')
       <button type="submit" id="delete-button" class="btn btn-sm btn-danger" onclick="submitForm(event,'voulez-vous supprimer ce congé ?','Supprimer')" ><i class="fa fa-trash"></i></button>

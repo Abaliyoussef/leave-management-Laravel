@@ -17,10 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('first_name_ar')->nullable();
+            $table->string('last_name_ar')->nullable();
             $table->string('cin');
             $table->string('situation');
             $table->string('num_de_som');
             $table->string('nationalite');
+            $table->string('nationalite_ar');
             $table->string('genre');
             $table->string('role');
             $table->string('date_naissance');
@@ -30,6 +33,7 @@ return new class extends Migration
             ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->string('poste');
+            $table->string('poste_ar')->nullable();
             $table->string('phone');
             $table->string('image', 2048)->nullable();
             $table->integer('score')->default('22');

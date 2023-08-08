@@ -43,12 +43,27 @@
 		@endif
   </div>
 </div>
-
+<div class="grid grid-cols-2 gap-6">
+  <div class="mb-6 ">
+    <label for="nom_ar" class="block mb-2 text-sm font-medium text-gray-900">Nom en arabe</label>
+    <input type="text" id="nom_ar" name="nom_ar" value="{{auth()->user()->last_name_ar}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre nom">
+    @if($errors->has('nom_ar'))
+			<span class="text-red-600">{{ $errors->first('nom_ar') }}</span>
+		@endif
+  </div>
+  <div class="mb-6 ">
+    <label for="prenom_ar" class="block mb-2 text-sm font-medium text-gray-900">prenom en arabe</label>
+    <input type="text" id="prenom_ar" name="prenom_ar" value="{{auth()->user()->first_name_ar}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre prenom">
+    @if($errors->has('prenom_ar'))
+							<span class="text-red-600">{{ $errors->first('prenom_ar') }}</span>
+		@endif
+  </div>
+</div>
     <div class="grid grid-cols-2 gap-6">
     <div class="mb-6">
         <label for="genre" class="block mb-2 text-sm font-medium text-gray-900">genre</label>
         <select name="genre" id="genre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <option value="Homme" {{ auth()->user()->genre == 'Homme' ? 'selected' : '' }}>Homme</option>
+            <option value="homme" {{ auth()->user()->genre == 'homme' ? 'selected' : '' }}>homme</option>
             <option value="femme" {{ auth()->user()->genre == 'femme' ? 'selected' : '' }} >femme</option>
         </select>
         @if($errors->has('genre'))
@@ -79,25 +94,36 @@
 		@endif
   </div>
     </div>
-    
-    <div class="grid grid-cols-2 gap-6">
-      <div class="mb-6">
+    <div class="grid grid-cols-3 gap-6">
+    <div class="mb-6">
         <label for="nationalite" class="block mb-2 text-sm font-medium text-gray-900">Nationalité</label>
-        <input type="text" id="nationalite" name="nationalite" value="{{auth()->user()->nationalite }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="saisir votre CIN">
+        <input type="text" id="nationatlite" name="nationalite" value="{{auth()->user()->nationalite}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="votre nationalité">
         @if($errors->has('nationalite'))
 							<span class="text-red-600">{{ $errors->first('nationalite') }}</span>
 		@endif
       </div>
-    <div class="mb-6">
+      <div class="mb-6">
+        <label for="nationalite_ar" class="block mb-2 text-sm font-medium text-gray-900">Nationalité an arabe</label>
+        <input type="text" id="nationalite_ar" name="nationalite_ar" value="{{auth()->user()->nationalite_ar}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="votre nationalité an arabe">
+        @if($errors->has('nationalite_ar'))
+							<span class="text-red-600">{{ $errors->first('nationalite_ar') }}</span>
+		@endif
+      </div>
+      <div class="mb-6">
         <label for="situation" class="block mb-2 text-sm font-medium text-gray-900">Situation familiale</label>
-        <input type="text" id="situation" name="situation" value="{{auth()->user()->situation }}"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="date de naissance">
+        <select id="situation" name="situation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" >
+        @foreach($situationsFamiliales as $situationFamiliale)
+        <option value="{{$situationFamiliale}}" {{ auth()->user()->situation == $situationFamiliale ? 'selected' : '' }}>{{$situationFamiliale}}</option>
+        @endforeach
+        </select>
         @if($errors->has('situation'))
 							<span class="text-red-600">{{ $errors->first('situation') }}</span>
 		@endif
       </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-6">
+
+    <div class="grid grid-cols-3 gap-6">
     <div class="mb-6">
         <label for="poste" class="block mb-2 text-sm font-medium text-gray-900">poste </label>
         <input type="text" id="poste" value="{{auth()->user()->poste}}" name="poste" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="votre poste">
@@ -105,7 +131,13 @@
 							<span class="text-red-600">{{ $errors->first('poste') }}</span>
 		@endif
       </div>
-      
+      <div class="mb-6">
+        <label for="poste" class="block mb-2 text-sm font-medium text-gray-900">poste en arabe</label>
+        <input type="text" id="poste" value="{{auth()->user()->poste_ar}}" name="poste_ar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="votre poste">
+        @if($errors->has('poste_ar'))
+							<span class="text-red-600">{{ $errors->first('poste_ar') }}</span>
+		    @endif
+      </div>
     <div class="mb-6">
         <label for="departement" class="block mb-2 text-sm font-medium text-gray-900">département</label>
         <select name="departement" id="departement" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" >
